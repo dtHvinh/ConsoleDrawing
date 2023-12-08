@@ -1,0 +1,15 @@
+D:\dev\csharp\project\ConsoleDrawing\ConsoleDrawing\bin\Debug\net8.0\ConsoleDrawing.exe
+D:\dev\csharp\project\ConsoleDrawing\ConsoleDrawing\bin\Debug\net8.0\ConsoleDrawing.deps.json
+D:\dev\csharp\project\ConsoleDrawing\ConsoleDrawing\bin\Debug\net8.0\ConsoleDrawing.runtimeconfig.json
+D:\dev\csharp\project\ConsoleDrawing\ConsoleDrawing\bin\Debug\net8.0\ConsoleDrawing.dll
+D:\dev\csharp\project\ConsoleDrawing\ConsoleDrawing\bin\Debug\net8.0\ConsoleDrawing.pdb
+D:\dev\csharp\project\ConsoleDrawing\ConsoleDrawing\obj\Debug\net8.0\ConsoleDrawing.GeneratedMSBuildEditorConfig.editorconfig
+D:\dev\csharp\project\ConsoleDrawing\ConsoleDrawing\obj\Debug\net8.0\ConsoleDrawing.AssemblyInfoInputs.cache
+D:\dev\csharp\project\ConsoleDrawing\ConsoleDrawing\obj\Debug\net8.0\ConsoleDrawing.AssemblyInfo.cs
+D:\dev\csharp\project\ConsoleDrawing\ConsoleDrawing\obj\Debug\net8.0\ConsoleDrawing.csproj.CoreCompileInputs.cache
+D:\dev\csharp\project\ConsoleDrawing\ConsoleDrawing\obj\Debug\net8.0\ConsoleDrawing.sourcelink.json
+D:\dev\csharp\project\ConsoleDrawing\ConsoleDrawing\obj\Debug\net8.0\ConsoleDrawing.dll
+D:\dev\csharp\project\ConsoleDrawing\ConsoleDrawing\obj\Debug\net8.0\refint\ConsoleDrawing.dll
+D:\dev\csharp\project\ConsoleDrawing\ConsoleDrawing\obj\Debug\net8.0\ConsoleDrawing.pdb
+D:\dev\csharp\project\ConsoleDrawing\ConsoleDrawing\obj\Debug\net8.0\ConsoleDrawing.genruntimeconfig.cache
+D:\dev\csharp\project\ConsoleDrawing\ConsoleDrawing\obj\Debug\net8.0\ref\ConsoleDrawing.dll
