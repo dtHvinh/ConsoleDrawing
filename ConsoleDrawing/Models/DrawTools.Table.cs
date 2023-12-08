@@ -32,13 +32,18 @@ public static partial class DrawTools
         }
     }
 
+    public struct Column(string name)
+    {
+        public readonly string Name { get; init; } = name;
+        public int Width { get; set; } = 0;
+    }
+
     public class TableColumn
     {
         public int ColumnCount { get; private set; } = 0;
         public int TotalColumnsWidth { get; private set; } = 0;
         public const int ColumnMarginLeft = 2;
-        public readonly List<int> ColumnWidth = [];
-        public readonly List<string> ColumnName = [];
+        public readonly List<Column> Columns = [];
         public const char LineSeparatorChar = '-';
         public const char ColumnSeparator = '|';
 
@@ -47,8 +52,7 @@ public static partial class DrawTools
         {
             foreach (var header in columnHeader)
             {
-                ColumnName.Add(header);
-                ColumnWidth.Add(0);
+                Columns.Add(new Column(header));
                 ++ColumnCount;
             }
         }
@@ -62,13 +66,18 @@ public static partial class DrawTools
 
                     for (int i = 0; i < columnContent.Length; i++)
                     {
-                        ColumnWidth[i] = TableHelper.Max(ColumnWidth[i], columnContent[i].Length, TableRow.MinWidth, ColumnName[i].Length);
-                        ColumnWidth[i] += ColumnMarginLeft;
+                        var col = Columns[i];
+                        col.Width = TableHelper.Max(col.Width,
+                                                    columnContent[i].Length,
+                                                    TableRow.MinWidth,
+                                                    col.Name.Length);
+                        col.Width += ColumnMarginLeft;
+                        Columns[i] = col;
                     }
                 });
 
-            var NOColumnSeparator = ColumnName.Count - 1;
-            TotalColumnsWidth = ColumnWidth.Sum() + NOColumnSeparator;
+            var NOColumnSeparator = Columns.Count - 1;
+            TotalColumnsWidth = Columns.Select(e => e.Width).Sum() + NOColumnSeparator;
         }
     }
 
@@ -95,19 +104,19 @@ public static partial class DrawTools
     }
     public class Table(TableColumn columns, TableOption? tableOption = null)
     {
-        public TableColumn Columns { get; set; } = columns;
+        public TableColumn TableColumns { get; set; } = columns;
         public TableOption TableOption { get; set; } = tableOption is null ? new() : tableOption;
-        public TableRow Rows { get; } = new();
+        public TableRow TableRows { get; } = new();
 
         public void AddRow(string commaSeparateContent)
         {
-            TableValidate.IsColumnMatch(Columns.ColumnCount, commaSeparateContent.Split(',', options: StringSplitOptions.RemoveEmptyEntries).Length);
-            Rows.RowsContent.Add(commaSeparateContent);
+            TableValidate.IsColumnMatch(TableColumns.ColumnCount, commaSeparateContent.Split(',', options: StringSplitOptions.RemoveEmptyEntries).Length);
+            TableRows.RowsContent.Add(commaSeparateContent);
         }
 
         public void Draw()
         {
-            Columns.CalculateColumnWidth(Rows);
+            TableColumns.CalculateColumnWidth(TableRows);
 
             DrawHeader();
             DrawContent();
@@ -118,8 +127,8 @@ public static partial class DrawTools
             int idx = 0;
             string header = string.Join(
                 TableColumn.ColumnSeparator,
-                Columns.ColumnName.Select(
-                    name => new string(' ', Columns.ColumnWidth[idx++] - name.Length) + name
+                TableColumns.Columns.Select(
+                    col => new string(' ', col.Width - col.Name.Length) + col.Name
                     )
                 );
             Console.ForegroundColor = ConsoleColor.Black;
@@ -132,14 +141,14 @@ public static partial class DrawTools
 
         private void DrawContent()
         {
-            Rows.RowsContent.ForEach(content =>
+            TableRows.RowsContent.ForEach(content =>
             {
                 int idx = 0;
                 string line = string.Join(
                     TableColumn.ColumnSeparator,
                     content
-                    .Split(TableRow.ContentSeparateChar)
-                    .Select(col => new string(' ', Columns.ColumnWidth[idx++] - col.Length) + col)
+                        .Split(TableRow.ContentSeparateChar)
+                        .Select(col => new string(' ', TableColumns.Columns[idx++].Width - col.Length) + col)
                 );
                 Console.WriteLine(line);
                 if (TableOption.RecordLineSeparator)
@@ -149,7 +158,7 @@ public static partial class DrawTools
 
         private void DrawLineSeparator()
         {
-            Console.WriteLine(new string(TableColumn.LineSeparatorChar, Columns.TotalColumnsWidth));
+            Console.WriteLine(new string(TableColumn.LineSeparatorChar, TableColumns.TotalColumnsWidth));
         }
     }
 }
