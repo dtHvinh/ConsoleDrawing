@@ -6,7 +6,7 @@ namespace ConsoleDrawing
     {
         static void Main(string[] args)
         {
-            var cols = new DrawTools.TableColumn("Id", "First Name", "Last Name");
+            var cols = DrawTools.TableColumn.Create("Id", "First Name", "Last Name");
             var table = new DrawTools.Table(cols);
 
             table.AddRow("1,John,Cater");

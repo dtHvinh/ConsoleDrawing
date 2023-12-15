@@ -11,10 +11,6 @@
       "RelativeMoniker": "D:0:0:{E5C87788-00C7-4ADC-AC2D-59648CEB0875}|ConsoleDrawing\\ConsoleDrawing.csproj|solutionrelative:consoledrawing\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{E5C87788-00C7-4ADC-AC2D-59648CEB0875}|ConsoleDrawing\\ConsoleDrawing.csproj|d:\\dev\\csharp\\project\\consoledrawing\\consoledrawing\\models\\drawtools.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{E5C87788-00C7-4ADC-AC2D-59648CEB0875}|ConsoleDrawing\\ConsoleDrawing.csproj|solutionrelative:consoledrawing\\models\\drawtools.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{E5C87788-00C7-4ADC-AC2D-59648CEB0875}|ConsoleDrawing\\ConsoleDrawing.csproj|d:\\dev\\csharp\\project\\consoledrawing\\consoledrawing\\models\\drawtools.chart.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{E5C87788-00C7-4ADC-AC2D-59648CEB0875}|ConsoleDrawing\\ConsoleDrawing.csproj|solutionrelative:consoledrawing\\models\\drawtools.chart.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -30,7 +26,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 227,
-          "SelectedChildIndex": 5,
+          "SelectedChildIndex": 6,
           "Children": [
             {
               "$type": "Bookmark",
@@ -50,6 +46,10 @@
             },
             {
               "$type": "Bookmark",
+              "Name": "ST:128:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
+            },
+            {
+              "$type": "Bookmark",
               "Name": "ST:0:0:{57d563b6-44a5-47df-85be-f4199ad6b651}"
             },
             {
@@ -60,14 +60,14 @@
               "RelativeDocumentMoniker": "ConsoleDrawing\\Models\\DrawTools.Table.cs",
               "ToolTip": "D:\\dev\\csharp\\project\\ConsoleDrawing\\ConsoleDrawing\\Models\\DrawTools.Table.cs",
               "RelativeToolTip": "ConsoleDrawing\\Models\\DrawTools.Table.cs",
-              "ViewState": "AQIAAIwAAAAAAAAAAAAAAJUAAAA8AAAA",
+              "ViewState": "AQIAAG8AAAAAAAAAAAAywIQAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2023-12-08T05:39:10.411Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 2,
               "Title": "DrawTools.Chart.cs",
               "DocumentMoniker": "D:\\dev\\csharp\\project\\ConsoleDrawing\\ConsoleDrawing\\Models\\DrawTools.Chart.cs",
               "RelativeDocumentMoniker": "ConsoleDrawing\\Models\\DrawTools.Chart.cs",
@@ -75,31 +75,21 @@
               "RelativeToolTip": "ConsoleDrawing\\Models\\DrawTools.Chart.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAB4AAAABAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2023-12-08T05:38:35.049Z"
+              "WhenOpened": "2023-12-08T05:38:35.049Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 3,
               "Title": "DrawTools.Border.cs",
               "DocumentMoniker": "D:\\dev\\csharp\\project\\ConsoleDrawing\\ConsoleDrawing\\Models\\DrawTools.Border.cs",
               "RelativeDocumentMoniker": "ConsoleDrawing\\Models\\DrawTools.Border.cs",
               "ToolTip": "D:\\dev\\csharp\\project\\ConsoleDrawing\\ConsoleDrawing\\Models\\DrawTools.Border.cs",
               "RelativeToolTip": "ConsoleDrawing\\Models\\DrawTools.Border.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAADkAAAABAAAA",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAIAAAAdAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2023-12-08T05:37:55.548Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "DrawTools.cs",
-              "DocumentMoniker": "D:\\dev\\csharp\\project\\ConsoleDrawing\\ConsoleDrawing\\Models\\DrawTools.cs",
-              "RelativeDocumentMoniker": "ConsoleDrawing\\Models\\DrawTools.cs",
-              "ToolTip": "D:\\dev\\csharp\\project\\ConsoleDrawing\\ConsoleDrawing\\Models\\DrawTools.cs",
-              "RelativeToolTip": "ConsoleDrawing\\Models\\DrawTools.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAUAAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2023-12-06T14:04:05.372Z"
+              "WhenOpened": "2023-12-08T05:37:55.548Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
@@ -109,9 +99,10 @@
               "RelativeDocumentMoniker": "ConsoleDrawing\\Program.cs",
               "ToolTip": "D:\\dev\\csharp\\project\\ConsoleDrawing\\ConsoleDrawing\\Program.cs",
               "RelativeToolTip": "ConsoleDrawing\\Program.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAA8AAAAWAAAA",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAA4AAAAqAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2023-12-03T09:30:15.918Z"
+              "WhenOpened": "2023-12-03T09:30:15.918Z",
+              "EditorCaption": ""
             }
           ]
         },

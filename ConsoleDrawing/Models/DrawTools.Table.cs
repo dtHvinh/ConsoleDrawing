@@ -5,14 +5,14 @@ public static partial class DrawTools
 {
     private static class TableHelper
     {
-        public static int Max(params int[] values)
+        public static int ColumnWidthCalculate(int maxWidth, params int[] values)
         {
             int max = 0;
             foreach (var value in values)
             {
                 max = int.Max(max, value);
             }
-            return max;
+            return int.Min(max, maxWidth);
         }
     }
 
@@ -20,7 +20,7 @@ public static partial class DrawTools
     {
         /// <summary>If 2 value different, throw exception.</summary> 
         /// <exception cref="InvalidOperationException"></exception>
-        public static void IsColumnMatch(int tableColumn, int rowContent)
+        public static void IsColumnCountMatch(int tableColumn, int rowContent)
         {
             if (rowContent != tableColumn)
             {
@@ -29,6 +29,12 @@ public static partial class DrawTools
                     "number of column of the table and the number of content in the row" +
                     $"{Environment.NewLine}Expected: {tableColumn}, Value: {rowContent}");
             }
+        }
+
+        public static void RequireUniqueId(HashSet<string> idSet, string commaSeparateContent)
+        {
+            var idString = commaSeparateContent[..commaSeparateContent.IndexOf(',')];
+            if (!idSet.Add(idString)) throw new ArgumentException($"Id: {idString} is duplicated");
         }
     }
 
@@ -40,24 +46,34 @@ public static partial class DrawTools
 
     public class TableColumn
     {
-        public int ColumnCount { get; private set; } = 0;
-        public int TotalColumnsWidth { get; private set; } = 0;
+        public const int MaxWidth = 17;
+        public const int MinWidth = 5;
         public const int ColumnMarginLeft = 2;
+
+        public int TotalColumnsWidth => Columns.Select(e => e.Width).Sum() + Columns.Count - 1;
+
         public readonly List<Column> Columns = [];
         public const char LineSeparatorChar = '-';
         public const char ColumnSeparator = '|';
+        public HashSet<string> IdCloumnValues { get; } = [];
+        public readonly bool HasPrimaryKey;
 
 
         public TableColumn(params string[] columnHeader)
         {
             foreach (var header in columnHeader)
             {
+                if (columnHeader[0].Contains("Id", StringComparison.OrdinalIgnoreCase))
+                {
+                    HasPrimaryKey = true;
+                }
                 Columns.Add(new Column(header));
-                ++ColumnCount;
             }
         }
 
-        public void CalculateColumnWidth(TableRow rows)
+        public static TableColumn Create(params string[] columnHeader) => new(columnHeader);
+
+        public void CalculateColumnsWidth(TableRow rows)
         {
             rows.RowsContent.ForEach(
                 row =>
@@ -67,17 +83,25 @@ public static partial class DrawTools
                     for (int i = 0; i < columnContent.Length; i++)
                     {
                         var col = Columns[i];
-                        col.Width = TableHelper.Max(col.Width,
-                                                    columnContent[i].Length,
-                                                    TableRow.MinWidth,
-                                                    col.Name.Length);
+                        // Comparison between:
+                        //  * Column current width,
+                        //  * The content of column width,
+                        //  * Table min-width value,
+                        //  * Column header width
+                        col.Width = TableHelper.ColumnWidthCalculate(maxWidth: MaxWidth,
+                                                                     values:
+                                                                     [
+                                                                         col.Width,
+                                                                         columnContent[i].Length,
+                                                                         MinWidth,
+                                                                         col.Name.Length
+                                                                     ]);
+                        // Margin left content
                         col.Width += ColumnMarginLeft;
                         Columns[i] = col;
                     }
                 });
-
-            var NOColumnSeparator = Columns.Count - 1;
-            TotalColumnsWidth = Columns.Select(e => e.Width).Sum() + NOColumnSeparator;
+            ;
         }
     }
 
@@ -87,44 +111,40 @@ public static partial class DrawTools
         public List<string> RowsContent { get; } // john,12,male,doctor
         public const char ContentSeparateChar = ',';
 
-        public const int MaxWidth = 17;
-        public const int MinWidth = 5;
-
         public TableRow()
         {
             RowCount = 0;
             RowsContent = [];
         }
+        public readonly void Add(string commaSeparateContent) => RowsContent.Add(commaSeparateContent);
     }
 
-    public class TableOption
-    {
-        public bool HeaderLineSeparator { get; set; } = false;
-        public bool RecordLineSeparator { get; set; } = false;
-    }
-    public class Table(TableColumn columns, TableOption? tableOption = null)
+    public class Table(TableColumn columns)
     {
         public TableColumn TableColumns { get; set; } = columns;
-        public TableOption TableOption { get; set; } = tableOption is null ? new() : tableOption;
         public TableRow TableRows { get; } = new();
 
         public void AddRow(string commaSeparateContent)
         {
-            TableValidate.IsColumnMatch(TableColumns.ColumnCount, commaSeparateContent.Split(',', options: StringSplitOptions.RemoveEmptyEntries).Length);
-            TableRows.RowsContent.Add(commaSeparateContent);
+            TableValidate.IsColumnCountMatch(TableColumns.Columns.Count, commaSeparateContent.Split(',', options: StringSplitOptions.RemoveEmptyEntries).Length);
+            TableValidate.RequireUniqueId(TableColumns.IdCloumnValues, commaSeparateContent);
+            TableRows.Add(commaSeparateContent);
         }
 
         public void Draw()
         {
-            TableColumns.CalculateColumnWidth(TableRows);
-
+            Initialize();
             DrawHeader();
             DrawContent();
         }
 
+        private void Initialize()
+        {
+            TableColumns.CalculateColumnsWidth(TableRows);
+        }
+
         private void DrawHeader()
         {
-            int idx = 0;
             string header = string.Join(
                 TableColumn.ColumnSeparator,
                 TableColumns.Columns.Select(
@@ -135,8 +155,14 @@ public static partial class DrawTools
             Console.BackgroundColor = ConsoleColor.White;
             Console.WriteLine(header);
             Console.ResetColor();
-            if (TableOption.HeaderLineSeparator)
-                DrawLineSeparator();
+            DrawLineSeparator();
+        }
+
+        private void DrawLineSeparator()
+        {
+            string line = string.Join(TableColumn.ColumnSeparator,
+                                      TableColumns.Columns.Select(col => new string('-', col.Width)));
+            Console.WriteLine(line);
         }
 
         private void DrawContent()
@@ -148,17 +174,12 @@ public static partial class DrawTools
                     TableColumn.ColumnSeparator,
                     content
                         .Split(TableRow.ContentSeparateChar)
-                        .Select(col => new string(' ', TableColumns.Columns[idx++].Width - col.Length) + col)
+                        .Select(col => new string(' ',
+                                                  TableColumns.Columns[idx++].Width - col.Length) + col) // Draw white space
                 );
                 Console.WriteLine(line);
-                if (TableOption.RecordLineSeparator)
-                    DrawLineSeparator();
+                DrawLineSeparator();
             });
-        }
-
-        private void DrawLineSeparator()
-        {
-            Console.WriteLine(new string(TableColumn.LineSeparatorChar, TableColumns.TotalColumnsWidth));
         }
     }
 }
